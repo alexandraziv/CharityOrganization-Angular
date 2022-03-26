@@ -1,0 +1,62 @@
+<!--paginacija ngb pagination, count je iz modela. -->
+<div class="row">
+    <ngb-pagination [collectionSize]="count" [(page)]="params.page" [pageSize]="params.pageSize"
+        (pageChange)="changePage($event)" ></ngb-pagination>
+</div>
+
+ <form class="form-row">
+        <div class="col form-inline">
+            <app-search [categories]="categories" (search)="onSearch($event)" (change)="getAllDonors()"></app-search>
+        </div>
+        <!--BROJCANA VREDNOST INPUTA SA FILTERIMA-->
+        <div class="form-group row">
+            <label for="min">Estimated Value</label>
+            <div class="input-group">
+                <input type="number" name="min" id="min" class="form-control" placeholder="min"
+                    [(ngModel)]="params.filter.minValue" (change)="getAllDonors()">
+                <input type="number" name="max" id="max" class="form-control" placeholder="max"
+                    [(ngModel)]="params.filter.maxValue" (change)="getAllDonors()">
+            </div>
+        <!--select filtriranje po kategorijama-->
+        <div class="form-group row">
+            <label for="category">Category</label>
+            <select name="category" id="category" class="form-control" [(ngModel)]="params.filter.categories"  
+            (change)="getAllDonors()" >
+                <option [value]="undefined" selected>All</option>
+                <option *ngFor="let cat of categories" [value]="cat"> {{cat}}</option>
+                <!--*ngFor="let spec of specialties" [value]="spec" {{spec | titlecase}}-->
+            </select>
+        </div>
+    </div>
+</form>
+<div class='row'>
+    <app-table [donors]="donors" (donorDeleted)="onDonorDeleted($event)"
+        (sortCriteriaChanged)="onSortCriteriaChanged($event)" ></app-table>
+</div>
+
+    <!--<div class="row">
+    <div class="col">
+        <app-pagination
+        [pageCount]="pageCount" (onPageSelected)="changePage($event)" ></app-pagination>
+</div>-->
+
+
+
+<!--DVA INPUTA TEKSTUALNO POLJE
+    <div class="col-4">
+    <input type="text" class="form-control" placeholder="First name" name="doctorName" [(ngModel)]="params.filter.name" (change)="getDoctors()">
+    </div>
+    <div class="col-4">
+    <input type="text" class="form-control" placeholder="Last Name" name="doctorLastName"  [(ngModel)]="params.filter.lastName" (change)="getDoctors()">
+<!-DA PRIKAZE U TABELI LISTU SA SERVERA U TABELI @Input() donors: Donor[] = []; IZ MODELA PODATAKA NIZ-->
+<!--da osvezi tabelu na neki event, ovde kad se nesto obrise-->
+
+<!--<label class="col-sm-2 col-form-label" for="inlineFormCustomSelect">Category: </label>
+<select class="custom-select mr-sm-2 col-8" id="inlineFormCustomSelect" name="categorySelect"
+    [(ngModel)]="params.filter.category" (change)="getPets()">
+    <option selected value="">All</option>
+    <option value="cat">Cats</option>
+    <option value="dog">Dogs</option>
+    <option value="other">Other</option>
+</select>-->
+

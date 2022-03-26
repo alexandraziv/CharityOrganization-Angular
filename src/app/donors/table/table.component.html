@@ -1,0 +1,48 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <!--(click) => dete salje output event emitter roditelju! event je ime. -->
+            <th>
+                Name
+                <button class="btn btn-link" (click)="onSortCriteriaChanged('name')">
+                    <span class="fa fa-sort"></span>
+                </button>
+            </th>
+            <th>
+                Year<button class="btn btn-link" (click)="onSortCriteriaChanged('charity_date')">
+                    <span class="fa fa-sort"></span>
+                </button>
+            </th>
+            <th>
+                Value
+                <button class="btn btn-link" (click)="onSortCriteriaChanged('estimated_value')">
+                    <span class="fa fa-sort"></span>
+                </button>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <!--za PUT - EDIT. MORA BITI PUNA FORMA. details/id-->
+        <!--[routerLink]="['/details/', i._id]" routerLinkActive="router-link-active"-->
+        <tr *ngFor="let i of donors">
+            <td>{{ i.name }}</td>
+            <td>{{ i.charity_date | date: "yyyy" }}</td>
+            <td>{{ i.estimated_value }}</td>
+            <td>
+                <button class="btn btn-secondary">
+                    <span class="fa fa-edit" [routerLink]="['/details/', i._id]"></span>
+                </button>
+            </td>
+            <td>
+                <button class="btn btn-danger">
+                    <span class="fa fa-remove" (click)="onDelete(i._id)"></span>
+                </button>
+            </td>
+
+            <!--
+          <td><button class="btn btn-link"><span class="fa fa-remove" (click)="onDelete(itWine._id)"></span></button></td>
+          <td><button class="btn btn-link"><span class="fa fa-edit" [routerLink]="['/wines/', itWine._id]"></span></button></td>
+          <td><button class="btn btn-primary "><span class="fa far fa-user " [routerLink]="['/persons/', i.personal_number]"> Personal Details</span></button></td>-->
+        </tr>
+    </tbody>
+</table>

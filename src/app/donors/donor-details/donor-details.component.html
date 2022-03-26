@@ -1,0 +1,91 @@
+<br />
+<p>TESTIRANJE JSON</p>
+<p>{{ donor | json }}</p>
+<p>{{ donorForm.value | json }} {{ donorForm.status | json }}</p>
+
+<form [formGroup]="donorForm" (submit)="onSubmit()" action="http://www.thezarichi.com/testbed/form-response.php"
+  method="post" novalidate>
+
+  <div class="form-group row">
+    <label for="name" class="col-2 col-form-label">Name</label>
+    <div class="col-10">
+      <input formControlName="name" id="name" class="form-control" type="text" name="name">
+      <small *ngIf="donorForm.controls['name'].touched 
+				&& donorForm.controls['name'].errors?.['required']" class="text-danger">
+        This field is required</small>
+    </div>
+  </div>
+  <br>
+  <!--textarea-->
+  <div class="form-group row">
+    <label for="description" class="col-2 col-form-label">Description</label>
+    <div class="col-10">
+      <textarea formControlName="description" id="description" class="form-control" name="description"></textarea>
+      <small *ngIf="donorForm.controls['description'].touched 
+				&& donorForm.controls['description'].errors?.['required']" class="text-danger">Field is required</small>
+      <small *ngIf="donorForm.controls['description'].touched 
+				&& donorForm.controls['description'].errors?.['minLength']" class="text-danger">Field must
+        contain at least 10 characters!
+      </small>
+    </div>
+  </div>
+  <br>
+  <!--datum  i vreme -->
+  <div class="form-group row">
+    <label for="date" class="col-2 col-form-label">Donation Date</label>
+    <div class="row">
+      <ngb-datepicker #dp formControlName="charity_date" [startDate]="donorForm.controls['charity_date'].value">
+      </ngb-datepicker>
+      <small *ngIf="donorForm.controls['charity_date'].touched 
+				&& donorForm.controls['charity_date'].errors?.['required']" class="text-danger">
+        You must enter a date.</small>
+    </div>
+  </div>
+  <br>
+  <!--multiple select-->
+  <div class="form-group row">
+    <label for="categories" class="col-2 col-form-label">Categories</label>
+    <div class="form-group">
+      <select class="form-control" name="categories" formControlName="categories" id="categories" multiple>
+        <option *ngFor="let category of categories" value="{{category}}">{{category}}</option>
+      </select>
+      <small *ngIf="donorForm.controls['categories'].touched 
+				&& donorForm.controls['categories'].errors?.['required']" class="text-danger">
+        You must enter at least one category </small>
+      <small *ngIf="donorForm.controls['categories'].touched 
+				&& donorForm.controls['categories'].errors?.['min']" class="text-danger">
+        You must enter at least one category!
+      </small>
+    </div>
+  </div>
+  <br>
+  <!--value inpu tekstt-->
+  <div class="form-group row">
+    <label for="value" class="col-2 col-form-label">Value</label>
+    <div class="col">
+      <input formControlName="estimated_value" id="value" class="form-control" type="text" name="value">
+      <small *ngIf="donorForm.controls['categories'].touched 
+				&& donorForm.controls['categories'].errors?.['required']" class="text-danger">
+        You must enter a value</small>
+    </div>
+  </div>
+  <br>
+  <!--submit forme-->
+  <div class="col">
+    <button type="submit" class="btn btn-primary" [disabled]="donorForm.invalid">Submit</button>&nbsp;
+    <button class="btn btn-success" [routerLink]="['/donors/', donor._id]">Save Changes</button>&nbsp;
+  </div>
+</form>
+
+
+<!--ondDelete je funkcija u detete details, u nju smo emitovali output
+donorDeleted da obavestimo roditelja da hocemo da ga izbrise!!!!
+Dakle, u roditelju, details list zatim pravimo funkciju brisanja onDonorDeleted da ga
+izbrise zaista i osvezi listu!!
+
+ <button class="btn btn-success" [routerLink]="['/donors/', donor._id]">Save Changes</button>&nbsp;
+<button class="btn btn-danger" (click)="onDelete(donor._id)">
+Delete</button>&nbsp;
+<button class="btn btn-secondary" type="button" (click)="onRevert()">
+Revert
+</button>-->
